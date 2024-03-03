@@ -1,0 +1,9 @@
+export const apiRouteForLogin = "/api/users/login";
+export const apiRouteForGetAllCourses = "/api/courses";
+export const apiRouteForSearchSpecificCourses = "/api/courses/search";
+// export const apiRouteForGetEnrolledCourses = "/api/users/:studentId/enroll";
+export const apiRouteForGetEnrolledCourses = "/api/users/enroll";
+export const apiRouteForFetchEnrolledCourses = "/api/users/enroll";
+export const apiRouteForStudentUpdate = "/api/users";
+export const apiRouteForGetInvoices = "/api/users/invoices";
+export const apiRouteForGetFinanceAccInfo = "/api/users/finance";

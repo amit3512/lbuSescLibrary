@@ -1,0 +1,19 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+    environment:
+      MONGO_URI: "mongodb://localhost:27017/sesc"
+      NODE_ENV: "development"
+      JWT_SECRET_KEY: "someSuperSecretKey123"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: pensive_germain
+    ports:
+      - "27017:27017"
