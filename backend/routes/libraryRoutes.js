@@ -15,7 +15,10 @@ router.post("/accounts/login", libraryController.loginUser);
 // router.get("/accounts", financeController.getAccounts);
 // router.post("/accounts/invoices", financeController.createInvoice);
 router.get("/books", libraryController.getAllBooks);
-router.get("/books/:type/", libraryController.updateAccountsWhenBorrowReturned);
+router.post(
+  "/books/:type/",
+  libraryController.updateAccountsWhenBorrowReturned
+);
 // router.put("/accounts/invoices/pay/:reference", financeController.payInvoice);
 
 module.exports = router;

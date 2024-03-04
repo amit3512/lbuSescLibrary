@@ -38,7 +38,7 @@ class LibraryController {
           },
         });
       } else if (accountExists && accountExists.isFirstLogin) {
-        if (pin != "000000") {
+        if (pin !== "000000") {
           const hashedPin = hashPassword(pin);
           await this.Account.findOneAndUpdate(
             { studentId: studentId },
@@ -119,21 +119,75 @@ class LibraryController {
   updateAccountsWhenBorrowReturned = async (req, res, next) => {
     try {
       const { type } = req.params;
-      const { studentId, isbm, borrowDate, returnDate } = req.body;
+      const { studentId, isbm } = req.body;
       const account = await this.Account.findOne({ studentId }).select("-pin");
-      console.log("accounts", account);
-      const existedBook = account.books.find(
+      const borrowedBookButNotReturned = account.books.find(
         (x) => x.isbm == isbm && x.isReturned == false
       );
-      if (existedBook) {
+      const borrowedBookandReturned = account.books.find(
+        (x) => x.isbm == isbm && x.isReturned == true
+      );
+      if (borrowedBookButNotReturned && type == "borrow") {
         res.status(200).json("Book Already Borrowed and has not returned yet.");
+      } else if (
+        !borrowedBookButNotReturned &&
+        type == "borrow" &&
+        !borrowedBookandReturned
+      ) {
+        const borrowDate = new Date();
+        const dueDate = new Date(borrowDate);
+        dueDate.setDate(dueDate.getDate() + 10);
+
+        account.books.push({
+          isbm,
+          borrowDate,
+          dueDate,
+          isReturned: false,
+        });
       }
-      account.books.push({
-        isbm,
-        borrowDate,
-        returnDate,
-        overdue: "45",
-      });
+
+      if (borrowedBookButNotReturned && type == "return") {
+        let overdueDays;
+        let dueDate;
+        account.books = account.books.map((x) => {
+          if (x.isbm == isbm) {
+            const returnDate = new Date();
+            dueDate = x.dueDate;
+            overdueDays =
+              returnDate > dueDate
+                ? Math.floor((returnDate - dueDate) / (1000 * 60 * 60 * 24))
+                : 0;
+            const updateBook = {
+              ...x,
+              returnDate,
+              overDue: overdueDays,
+              isReturned: true,
+            };
+
+            return updateBook;
+          }
+          return x;
+        });
+        if (overdueDays > 0) {
+          const libraryFine = overdueDays * 0.4;
+          const responseInvoice = await axios.post(
+            "http://localhost:8085/api/finance/accounts/invoices/",
+            {
+              amount: libraryFine,
+              dueDate: dueDate,
+              type: "LIBRARY_FINE",
+              account: {
+                studentId: studentId,
+              },
+            }
+          );
+        }
+      } else if (borrowedBookandReturned && type == "return") {
+        res.status(200).json("Book Already Returned.");
+      } else if (!borrowedBookandReturned && type == "return") {
+        res.status(200).json("You have not borrow this Book.");
+      }
+
       const upadtedAccount = await account.save();
       res.status(200).json(upadtedAccount);
     } catch (err) {

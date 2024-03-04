@@ -10,7 +10,9 @@ const accountSchema = new mongoose.Schema({
       isbm: { type: String, unique: true },
       borrowDate: { type: Date },
       returnDate: { type: Date },
-      overdue: { type: String },
+      dueDate: { type: Date },
+      isReturned: { type: Boolean },
+      overDue: { type: String },
     },
   ],
 });

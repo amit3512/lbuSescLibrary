@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PrivateRoute from "../privateRoute";
+// import PrivateRoute from "../privateRoute";
 
 // components
 import MasterLayout from "../components/layouts/master";
 import PageNotFound from "../pages/pageNotFound";
 
 import { useSelector } from "react-redux";
-import PaymentPortal from "../pages/portal/finance/payment";
+import LibraryPortal from "../pages/portal/library";
 
 function MasterLayoutWrapper(childComponent) {
   const HOC = () => <MasterLayout component={childComponent} />;
@@ -17,7 +17,7 @@ const Routess = () => {
   return (
     <Router>
       <Routes>
-        <Route exact path="/portal" element={<PaymentPortal />} />
+        <Route exact path="/" element={<LibraryPortal />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
