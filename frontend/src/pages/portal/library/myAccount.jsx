@@ -1,12 +1,16 @@
 import { Table } from "antd";
 import "../../../css/myAcc.css";
+import { useSelector } from "react-redux";
 
 export default function MyAccount() {
+  const { data, loading } = useSelector((state) => state.auth);
+  console.log("data", data);
+
   const columns = [
     {
       title: "Book",
       key: "1",
-      dataIndex: "name",
+      dataIndex: "isbm",
     },
     {
       title: "Date Borrowed",
@@ -25,17 +29,17 @@ export default function MyAccount() {
     },
   ];
 
-  const data = [
-    {
-      name: "BOOKKKKS NUMBER 11111",
-      borrowDate: "Sept 20, 2023",
-      returnDate: "Sept 20, 2023",
-      overDue: "1023654",
-    },
-  ];
   return (
     <div className="centered-table">
-      <Table columns={columns} alignItems="center" dataSource={data} />
+      <Table
+        columns={columns}
+        alignItems="center"
+        dataSource={data?.books?.map((x) => ({
+          ...x,
+          key: x.isbm,
+        }))}
+        loading={loading}
+      />
     </div>
   );
 }

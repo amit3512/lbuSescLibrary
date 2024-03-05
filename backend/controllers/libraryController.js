@@ -1,10 +1,7 @@
 const axios = require("axios");
 const { hashPassword, comparePasswords } = require("../utils/hashPassword");
-const generateAuthToken = require("../utils/generateReference");
-const { generateRandomStudentId } = require("../utils/generateRandomStudentId");
-const courses = require("../seeder/courses");
+const courses = require("../seeder/books");
 const cookie = require("cookie");
-const generateReference = require("../utils/generateReference");
 
 class LibraryController {
   constructor(AccountModel, BookModel) {
@@ -77,12 +74,21 @@ class LibraryController {
           .status(404)
           .json({ error: "You cannot have 000000 for security reasons." });
       } else if (pin == "000000" && account.isFirstLogin) {
-        return res.status(404).json({ error: "You need to change your PIN." });
+        return res
+          .status(200)
+          .json({ message: "Change your PIN.", success: true });
       }
       const isPinCorrect = await comparePasswords(pin, account.pin);
 
       if (isPinCorrect) {
-        return res.status(200).json({ message: "Login successful" });
+        return res.status(200).json({
+          message: "Login successful",
+          data: {
+            studentId: account.studentId,
+            isFirstLogin: account.isFirstLogin,
+            books: account.books,
+          },
+        });
       } else {
         return res.status(401).json({ error: "Incorrect PIN" });
       }
@@ -108,8 +114,9 @@ class LibraryController {
     try {
       const books = await this.Book.find({});
       return res.status(200).json({
-        success: "All Books.",
+        success: true,
         data: books,
+        message: "ALl Books.",
       });
     } catch (err) {
       next(err);

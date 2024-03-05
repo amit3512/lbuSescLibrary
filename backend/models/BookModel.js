@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 
 // Define the Student schema
 const bookSchema = new mongoose.Schema({
-  isbm: { type: String, unique: true },
+  isbn: { type: String, unique: true },
   title: { type: String, unique: true },
   author: { type: String, unique: true },
   copies: { type: String, unique: true },
+  year: { type: String },
 });
 
 // Create the Account model

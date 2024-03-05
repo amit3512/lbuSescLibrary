@@ -7,13 +7,13 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import { createStore, applyMiddleware, compose } from "redux";
 import { thunk } from "redux-thunk";
 import authReducer from "./reducer/auth";
-import courseReducer from "./reducer/courses";
 import enrolledCourseReducer from "./reducer/student";
 import invoiceReducer from "./reducer/invoice";
+import bookReducer from "./reducer/books";
 
 const reducers = combineReducers({
   auth: authReducer,
-  course: courseReducer,
+  books: bookReducer,
   enrolledCourses: enrolledCourseReducer,
   invoice: invoiceReducer,
 });
@@ -22,7 +22,7 @@ const persistConfig = {
   key: "rootv2",
   storage,
   stateReconciler: hardSet,
-  whitelist: ["auth", "course"],
+  whitelist: ["auth", "books"],
   transforms: [
     encryptTransform({
       secretKey: "someSuperSecret",

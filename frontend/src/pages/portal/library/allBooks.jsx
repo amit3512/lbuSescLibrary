@@ -1,7 +1,10 @@
+import { useSelector } from "react-redux";
+
 import { Table } from "antd";
 import "../../../css/myAcc.css";
 
 export default function AllBooks() {
+  const { data, loading } = useSelector((state) => state.books);
   const columns = [
     {
       title: "ISBN",
@@ -16,7 +19,7 @@ export default function AllBooks() {
     {
       title: "Author",
       key: "3",
-      dataIndex: "returnDate",
+      dataIndex: "author",
     },
     {
       title: "Year",
@@ -30,17 +33,19 @@ export default function AllBooks() {
     },
   ];
 
-  const data = [
-    {
-      name: "BOOKKKKS NUMBER 11111",
-      borrowDate: "Sept 20, 2023",
-      returnDate: "Sept 20, 2023",
-      overDue: "1023654",
-    },
-  ];
   return (
     <div className="centered-table">
-      <Table columns={columns} alignItems="center" dataSource={data} />
+      <Table
+        columns={columns}
+        alignItems="center"
+        dataSource={data?.map((x) => {
+          return {
+            ...x,
+            key: x.isbn,
+          };
+        })}
+        loading={loading}
+      />
     </div>
   );
 }

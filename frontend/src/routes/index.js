@@ -1,5 +1,7 @@
+import { useSelector } from "react-redux";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import PrivateRoute from "../privateRoute";
+import PrivateRoute from "../privateRoute";
 
 // components
 import MasterLayout from "../components/layouts/master";
@@ -16,6 +18,7 @@ function MasterLayoutWrapper(childComponent) {
 }
 
 const Routess = () => {
+  const { data } = useSelector((state) => state.auth);
   return (
     <Router>
       <Routes>
@@ -25,9 +28,15 @@ const Routess = () => {
           path="/firstLogin"
           element={MasterLayoutWrapper(Register)}
         />
-        <Route exact path="/" element={MasterLayoutWrapper(LibraryPortal)} />
-        {/* <Route exact path="/" element={<LibraryPortal />} />
-        <Route path="*" element={<PageNotFound />} /> */}
+        <Route
+          exact
+          path="/"
+          element={
+            <PrivateRoute>{MasterLayoutWrapper(LibraryPortal)}</PrivateRoute>
+          }
+        />
+
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
   );

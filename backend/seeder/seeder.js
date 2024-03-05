@@ -2,18 +2,18 @@ require("dotenv").config();
 const connectDB = require("../config/db");
 connectDB();
 
-const courseData = require("./courses");
+const booksData = require("./books");
 
-const Course = require("../models/BookModel");
+const Book = require("../models/BookModel");
 
 const importData = async () => {
   try {
-    await Course.collection.dropIndexes();
+    await Book.collection.dropIndexes();
 
-    await Course.collection.deleteMany({});
+    await Book.collection.deleteMany({});
 
     if (process.argv[2] !== "-d") {
-      await Course.insertMany(courseData);
+      await Book.insertMany(booksData);
 
       console.log("Seeder data imported successfully");
       process.exit();

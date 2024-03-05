@@ -3,8 +3,11 @@ import { Tabs } from "antd";
 import MyAccount from "./myAccount";
 import BorrowReturn from "./borrowReturn";
 import AllBooks from "./allBooks";
+import { useDispatch } from "react-redux";
+import { getAllBooks } from "../../../store/action/books";
 
 export default function LibraryPortal() {
+  const dispatch = useDispatch();
   const [activeKey, setActiveKey] = useState("4");
   const items = [
     {
@@ -32,6 +35,9 @@ export default function LibraryPortal() {
   const onChange = (key) => {
     // setSearchCoureText("");
     setActiveKey(key);
+    if (key === "1") {
+      dispatch(getAllBooks());
+    }
     // setEdit(false);
     // setCourseDetails({
     //   details: "",

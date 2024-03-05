@@ -1,31 +1,10 @@
 import React from "react";
-import { Navigate, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
-import StudentPortal from "../pages/portal/student";
+import { useSelector } from "react-redux";
 
-export default function PrivateRoute({ element: Component, ...rest }) {
-  const user = useSelector((state) => state.auth?.data ?? false);
-  console.log("Component", rest);
+export default function PrivateRoute({ children }) {
+  const { data } = useSelector((state) => state.auth);
 
-  // useEffect(() => {
-  //   dispatch(getAllRole());
-  //   dispatch(getAllInformation());
-  //   dispatch(getAllProvince());
-  //   dispatch(getAllDistrict());
-  //   dispatch(getAllLocalLevel());
-  // }, []);
-
-  return (
-    // <Route
-    //   {...rest}
-    //   render={() => (user ? <Component /> : <Navigate to="/login" />)}
-    // />
-
-    <Route
-      {...rest}
-      // element={user ? <Component /> : <Navigate to="/login" />}
-      element={user ? <StudentPortal /> : <Navigate to="/login" />}
-    />
-  );
+  return data ? children : <Navigate to="/login" />;
 }

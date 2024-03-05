@@ -67,15 +67,12 @@ export const studentUpdateFailed = ({ message }) => {
   };
 };
 
-export const attemptLogin = (email, password) => {
+export const attemptLogin = (values) => {
   return async function (dispatch) {
     const defaultErrorMsg = "Error on login attempt";
     try {
       dispatch(loginStart());
-      const response = await httpUtils.post(`${apiRouteForLogin}`, {
-        email: email,
-        password: password,
-      });
+      const response = await httpUtils.post(`${apiRouteForLogin}`, values);
       const { status } = response?.data;
       if (!status === 200) {
         const { error } = response?.data;

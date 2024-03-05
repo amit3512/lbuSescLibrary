@@ -1,5 +1,5 @@
-export const apiRouteForLogin = "/api/users/login";
-export const apiRouteForGetAllCourses = "/api/courses";
+export const apiRouteForLogin = "/api/library/accounts/login";
+export const apiRouteForGetAllBooks = "/api/library/books";
 export const apiRouteForSearchSpecificCourses = "/api/courses/search";
 // export const apiRouteForGetEnrolledCourses = "/api/users/:studentId/enroll";
 export const apiRouteForGetEnrolledCourses = "/api/users/enroll";
