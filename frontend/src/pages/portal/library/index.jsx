@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Tabs, Typography } from "antd";
+import { Tabs } from "antd";
 import MyAccount from "./myAccount";
 import BorrowReturn from "./borrowReturn";
 import AllBooks from "./allBooks";
 
-const { Title, Text } = Typography;
 export default function LibraryPortal() {
   const [activeKey, setActiveKey] = useState("4");
   const items = [
@@ -41,21 +40,8 @@ export default function LibraryPortal() {
   };
 
   return (
-    <div style={{ marginLeft: 10 }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Title level={3}>
-          <span style={{ color: "orange" }}>Library</span> Portal
-        </Title>
-        <Text style={{ marginRight: 5, marginTop: 29 }}>Log Out</Text>
-      </div>
-      <div>
-        <Tabs onChange={onChange} items={items} activeKey={activeKey} />
-      </div>
+    <div>
+      <Tabs onChange={onChange} items={items} activeKey={activeKey} />
     </div>
   );
 }

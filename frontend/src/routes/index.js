@@ -5,20 +5,29 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MasterLayout from "../components/layouts/master";
 import PageNotFound from "../pages/pageNotFound";
 
-import { useSelector } from "react-redux";
 import LibraryPortal from "../pages/portal/library";
+import Login from "../pages/portal/library/login";
+import Register from "../pages/portal/library/register";
 
 function MasterLayoutWrapper(childComponent) {
-  const HOC = () => <MasterLayout component={childComponent} />;
-  return HOC;
+  // const HOC = () => <MasterLayout component={element} />;
+  // return HOC;
+  return <MasterLayout component={childComponent} />;
 }
 
 const Routess = () => {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<LibraryPortal />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route exact path="/login" element={MasterLayoutWrapper(Login)} />
+        <Route
+          exact
+          path="/firstLogin"
+          element={MasterLayoutWrapper(Register)}
+        />
+        <Route exact path="/" element={MasterLayoutWrapper(LibraryPortal)} />
+        {/* <Route exact path="/" element={<LibraryPortal />} />
+        <Route path="*" element={<PageNotFound />} /> */}
       </Routes>
     </Router>
   );
