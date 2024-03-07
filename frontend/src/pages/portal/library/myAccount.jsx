@@ -23,11 +23,17 @@ export default function MyAccount() {
       dataIndex: "returnDate",
     },
     {
-      title: "Overdue",
+      title: "Due Date",
       key: "4",
+      dataIndex: "dueDate",
+    },
+    {
+      title: "Overdue",
+      key: "5",
       dataIndex: "overDue",
     },
   ];
+  var options = { year: "numeric", month: "2-digit", day: "2-digit" };
 
   return (
     <div className="centered-table">
@@ -37,6 +43,9 @@ export default function MyAccount() {
         dataSource={data?.books?.map((x) => ({
           ...x,
           key: x.isbn,
+          borrowDate: new Date(x.borrowDate).toLocaleDateString("en", options),
+          returnDate: new Date(x.returnDate).toLocaleDateString("en", options),
+          dueDate: new Date(x.dueDate).toLocaleDateString("en", options),
         }))}
         loading={loading}
       />

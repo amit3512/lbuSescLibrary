@@ -110,13 +110,15 @@ export const updateBorrowReturn = (type, isbn, studentId) => {
         const { error } = response?.data;
         throw error;
       }
-      const { data: responseData } = response.data;
-      console.log("responseData", response);
+      const { data: responseData } = response;
+      console.log("responseData", responseData);
 
       //   localStorage.setItem("auth", responseData);
-      // dispatch(studentUpdateSuccess(values));
+      dispatch(studentUpdateSuccess(responseData));
+      notification.success({ message: `Book ${type}ed` });
     } catch (error) {
       console.log("error", error);
+      notification.warning({ message: error?.response?.data });
       //   dispatch(studentUpdateFailed({ message: error.message ?? defaultErrorMsg }));
     }
   };

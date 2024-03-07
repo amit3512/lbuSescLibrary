@@ -29,6 +29,8 @@ const logout = (state, action) =>
   updateObject(state, { error: action.error, loading: false, data: null });
 
 const studentUpdateSuccess = (state, action) => {
+  console.log("updateStudent", action);
+
   const updateStudent = {
     error: null,
     loading: false,

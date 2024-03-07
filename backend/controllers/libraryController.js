@@ -127,8 +127,11 @@ class LibraryController {
     try {
       const { type } = req.params;
       const { studentId, isbn } = req.body;
-      console.log("requestsss", studentId, isbn, type);
       const account = await this.Account.findOne({ studentId }).select("-pin");
+      const book = await this.Book.findOne({ isbn });
+      if (!book) {
+        res.status(404).json("Book Not Found.");
+      }
       const borrowedBookButNotReturned = account.books.find(
         (x) => x.isbn == isbn && x.isReturned == false
       );
@@ -136,11 +139,12 @@ class LibraryController {
         (x) => x.isbn == isbn && x.isReturned == true
       );
       if (borrowedBookButNotReturned && type == "borrow") {
-        res.status(200).json("Book Already Borrowed and has not returned yet.");
+        res.status(404).json("Book Already Borrowed and has not returned yet.");
       } else if (
-        !borrowedBookButNotReturned &&
-        type == "borrow" &&
-        !borrowedBookandReturned
+        (!borrowedBookButNotReturned &&
+          type == "borrow" &&
+          !borrowedBookandReturned) ||
+        (type == "borrow" && borrowedBookandReturned)
       ) {
         const borrowDate = new Date();
         const dueDate = new Date(borrowDate);
@@ -152,6 +156,9 @@ class LibraryController {
           dueDate,
           isReturned: false,
         });
+      }
+
+      if (type == "borrow" && borrowedBookandReturned) {
       }
 
       if (borrowedBookButNotReturned && type == "return") {
@@ -191,9 +198,9 @@ class LibraryController {
           );
         }
       } else if (borrowedBookandReturned && type == "return") {
-        res.status(200).json("Book Already Returned.");
+        res.status(400).json("Book Already Returned.");
       } else if (!borrowedBookandReturned && type == "return") {
-        res.status(200).json("You have not borrow this Book.");
+        res.status(400).json("You have not borrowed this Book.");
       }
 
       const upadtedAccount = await account.save();
