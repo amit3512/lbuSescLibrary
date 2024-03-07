@@ -2,7 +2,7 @@
 import { notification } from "antd";
 import {
   apiRouteForLogin,
-  apiRouteForStudentUpdate,
+  apiRouteForStudentWhenBorrowReturnBook,
 } from "../../constants/apiRoutes";
 
 import httpUtils from "../../utils/httpUtils";
@@ -93,14 +93,17 @@ export const attemptLogin = (values) => {
   };
 };
 
-export const updateStudent = (studentId, values) => {
+export const updateBorrowReturn = (type, isbn, studentId) => {
   return async function (dispatch) {
-    const defaultErrorMsg = "Error on studentUpdate attempt";
+    const defaultErrorMsg = `Error on update ${type} attempt`;
     try {
       dispatch(studentUpdateStart());
-      const response = await httpUtils.put(
-        `${apiRouteForStudentUpdate}/${studentId}`,
-        values
+      const response = await httpUtils.post(
+        `${apiRouteForStudentWhenBorrowReturnBook}/${type}`,
+        {
+          studentId,
+          isbn,
+        }
       );
       const { status } = response?.data;
       if (!status === 200) {
@@ -108,9 +111,10 @@ export const updateStudent = (studentId, values) => {
         throw error;
       }
       const { data: responseData } = response.data;
+      console.log("responseData", response);
 
       //   localStorage.setItem("auth", responseData);
-      dispatch(studentUpdateSuccess(values));
+      // dispatch(studentUpdateSuccess(values));
     } catch (error) {
       console.log("error", error);
       //   dispatch(studentUpdateFailed({ message: error.message ?? defaultErrorMsg }));

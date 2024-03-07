@@ -9,6 +9,7 @@ import { getAllBooks } from "../../../store/action/books";
 export default function LibraryPortal() {
   const dispatch = useDispatch();
   const [activeKey, setActiveKey] = useState("4");
+  const [isbn, setISBN] = useState("");
   const items = [
     {
       label: "Books",
@@ -18,12 +19,12 @@ export default function LibraryPortal() {
     {
       label: "Borrow",
       key: "2",
-      children: <BorrowReturn type="Borrow" />,
+      children: <BorrowReturn type="borrow" setISBN={setISBN} isbn={isbn} />,
     },
     {
       label: "Return",
       key: "3",
-      children: <BorrowReturn type="Return" />,
+      children: <BorrowReturn type="return" setISBN={setISBN} isbn={isbn} />,
     },
     {
       label: "My Account",
@@ -37,6 +38,9 @@ export default function LibraryPortal() {
     setActiveKey(key);
     if (key === "1") {
       dispatch(getAllBooks());
+    }
+    if (key === "2") {
+      setISBN("");
     }
     // setEdit(false);
     // setCourseDetails({

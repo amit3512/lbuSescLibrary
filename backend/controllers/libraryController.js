@@ -126,13 +126,14 @@ class LibraryController {
   updateAccountsWhenBorrowReturned = async (req, res, next) => {
     try {
       const { type } = req.params;
-      const { studentId, isbm } = req.body;
+      const { studentId, isbn } = req.body;
+      console.log("requestsss", studentId, isbn, type);
       const account = await this.Account.findOne({ studentId }).select("-pin");
       const borrowedBookButNotReturned = account.books.find(
-        (x) => x.isbm == isbm && x.isReturned == false
+        (x) => x.isbn == isbn && x.isReturned == false
       );
       const borrowedBookandReturned = account.books.find(
-        (x) => x.isbm == isbm && x.isReturned == true
+        (x) => x.isbn == isbn && x.isReturned == true
       );
       if (borrowedBookButNotReturned && type == "borrow") {
         res.status(200).json("Book Already Borrowed and has not returned yet.");
@@ -146,7 +147,7 @@ class LibraryController {
         dueDate.setDate(dueDate.getDate() + 10);
 
         account.books.push({
-          isbm,
+          isbn,
           borrowDate,
           dueDate,
           isReturned: false,
@@ -157,7 +158,7 @@ class LibraryController {
         let overdueDays;
         let dueDate;
         account.books = account.books.map((x) => {
-          if (x.isbm == isbm) {
+          if (x.isbn == isbn) {
             const returnDate = new Date();
             dueDate = x.dueDate;
             overdueDays =

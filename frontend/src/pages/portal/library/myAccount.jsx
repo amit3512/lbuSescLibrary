@@ -10,7 +10,7 @@ export default function MyAccount() {
     {
       title: "Book",
       key: "1",
-      dataIndex: "isbm",
+      dataIndex: "isbn",
     },
     {
       title: "Date Borrowed",
@@ -36,7 +36,7 @@ export default function MyAccount() {
         alignItems="center"
         dataSource={data?.books?.map((x) => ({
           ...x,
-          key: x.isbm,
+          key: x.isbn,
         }))}
         loading={loading}
       />
