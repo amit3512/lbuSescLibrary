@@ -1,8 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Button, Form, Input } from "antd";
 import "../../../css/myAcc.css";
+import { attemptRegister } from "../../../store/action/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const { data } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (data && data.message !== "Change your PIN.") {
+      navigate("/");
+    }
+  }, [data, navigate]);
+
   const [confirmPinError, setConfirmPinError] = useState(null);
 
   const validateConfirmPin = ({ getFieldValue }) => ({
@@ -17,7 +33,7 @@ export default function Register() {
   });
 
   const onFinish = (values) => {
-    console.log("Form submitted with values:", values);
+    dispatch(attemptRegister(values));
     // Add additional logic for handling the form submission
   };
 

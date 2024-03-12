@@ -12,7 +12,6 @@ class LibraryController {
   registerUser = async (req, res, next) => {
     try {
       const { studentId, pin } = req.body;
-      console.log("requireLibrarystudentId", studentId);
 
       if (!studentId) {
         return res.status(400).send("StudentId is required");
@@ -47,7 +46,14 @@ class LibraryController {
             },
             { new: true }
           );
-          return res.status(200).send("Pin Updated");
+          return res.status(200).json({
+            message: "Pin Updated",
+            data: {
+              studentId,
+              isFirstLogin: false,
+              books: accountExists.books,
+            },
+          });
         }
         return res.send("Pin cannot be 000000 for security reasons.");
       }
@@ -76,7 +82,7 @@ class LibraryController {
       } else if (pin == "000000" && account.isFirstLogin) {
         return res
           .status(200)
-          .json({ message: "Change your PIN.", success: true });
+          .json({ data: { message: "Change your PIN.", success: true } });
       }
       const isPinCorrect = await comparePasswords(pin, account.pin);
 
@@ -158,8 +164,8 @@ class LibraryController {
         });
       }
 
-      if (type == "borrow" && borrowedBookandReturned) {
-      }
+      // if (type == "borrow" && borrowedBookandReturned) {
+      // }
 
       if (borrowedBookButNotReturned && type == "return") {
         let overdueDays;

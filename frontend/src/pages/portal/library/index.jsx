@@ -35,12 +35,14 @@ export default function LibraryPortal() {
 
   const onChange = (key) => {
     // setSearchCoureText("");
+    setISBN("");
     setActiveKey(key);
     if (key === "1") {
       dispatch(getAllBooks());
     }
     if (key === "2") {
-      setISBN("");
+    }
+    if (key === "4") {
     }
     // setEdit(false);
     // setCourseDetails({

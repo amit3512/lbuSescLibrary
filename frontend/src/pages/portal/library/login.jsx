@@ -11,13 +11,17 @@ import { attemptLogin } from "../../../store/action/auth";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data } = useSelector((state) => state.auth);
+  const { data, message } = useSelector((state) => state.auth);
+  console.log("datasss", data);
 
   useEffect(() => {
     if (!data) {
       navigate("/login");
-    } else if (data?.isFirstLogin) {
-      navigate("/register");
+    } else if (
+      message == "Change your PIN." ||
+      data?.message == "Change your PIN."
+    ) {
+      navigate("/firstLogin");
     } else {
       navigate("/");
     }

@@ -27,6 +27,7 @@ const Routess = () => {
           exact
           path="/firstLogin"
           element={MasterLayoutWrapper(Register)}
+          // element={<PrivateRoute>{MasterLayoutWrapper(Register)}</PrivateRoute>}
         />
         <Route
           exact

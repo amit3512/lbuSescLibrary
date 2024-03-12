@@ -2,6 +2,7 @@
 import { notification } from "antd";
 import {
   apiRouteForLogin,
+  apiRouteForRegister,
   apiRouteForStudentWhenBorrowReturnBook,
 } from "../../constants/apiRoutes";
 
@@ -67,7 +68,37 @@ export const studentUpdateFailed = ({ message }) => {
   };
 };
 
+export const attemptRegister = (values) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+
+  return async function (dispatch) {
+    const defaultErrorMsg = "Error on login attempt";
+    try {
+      dispatch(loginStart());
+      const response = await httpUtils.post(`${apiRouteForRegister}`, values);
+      const { status } = response?.data;
+      if (!status === 200) {
+        const { error } = response?.data;
+        throw error;
+      }
+      const { data: responseData } = response.data;
+
+      //   localStorage.setItem("auth", responseData);
+      dispatch(loginSuccess(responseData));
+    } catch (error) {
+      notification.info({
+        message: "Wrong Credentials",
+      });
+      // dispatch(
+      //   loginFailed({ message: error.response.data ?? defaultErrorMsg })
+      // );
+    }
+  };
+};
+
 export const attemptLogin = (values) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+
   return async function (dispatch) {
     const defaultErrorMsg = "Error on login attempt";
     try {
@@ -79,6 +110,7 @@ export const attemptLogin = (values) => {
         throw error;
       }
       const { data: responseData } = response.data;
+      console.log("response,", response);
 
       //   localStorage.setItem("auth", responseData);
       dispatch(loginSuccess(responseData));
@@ -111,11 +143,32 @@ export const updateBorrowReturn = (type, isbn, studentId) => {
         throw error;
       }
       const { data: responseData } = response;
-      console.log("responseData", responseData);
+      const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+      const todayDate = new Date().toLocaleDateString("en", options);
+      // const todayDate = new Date();
+      const overDue = responseData?.books?.find((book) => {
+        console.log("todayDate", book.returnDate, todayDate);
+        return (
+          book.isbn == isbn &&
+          parseInt(book.overDue) > 0 &&
+          new Date(book.returnDate).toLocaleDateString("en", options) ==
+            todayDate
+        );
+      });
+      console.log("responseDataBookBorrowoverDue", overDue);
+
+      if (overDue && type === "return") {
+        alert(
+          `You have been fined ${
+            overDue.overDue * 0.4
+          } pound/s. Go to student portal for more invoice details.`
+        );
+      } else {
+        notification.success({ message: `Book ${type}ed` });
+      }
 
       //   localStorage.setItem("auth", responseData);
       dispatch(studentUpdateSuccess(responseData));
-      notification.success({ message: `Book ${type}ed` });
     } catch (error) {
       console.log("error", error);
       notification.warning({ message: error?.response?.data });

@@ -1,4 +1,5 @@
 export const apiRouteForLogin = "/api/library/accounts/login";
+export const apiRouteForRegister = "/api/library/accounts/register";
 export const apiRouteForGetAllBooks = "/api/library/books";
 export const apiRouteForStudentWhenBorrowReturnBook = "/api/library/books";
 

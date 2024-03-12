@@ -40,9 +40,9 @@ export default function MyAccount() {
       <Table
         columns={columns}
         alignItems="center"
-        dataSource={data?.books?.map((x) => ({
+        dataSource={data?.books?.map((x, index) => ({
           ...x,
-          key: x.isbn,
+          key: index + 1,
           borrowDate: new Date(x.borrowDate).toLocaleDateString("en", options),
           returnDate: new Date(x.returnDate).toLocaleDateString("en", options),
           dueDate: new Date(x.dueDate).toLocaleDateString("en", options),
