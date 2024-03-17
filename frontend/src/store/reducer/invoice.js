@@ -17,7 +17,6 @@ const Start = (state, action) =>
   updateObject(state, { error: null, loading: true });
 
 const Success = (state, action) => {
-  console.log("actionInvoice", action);
   return updateObject(state, {
     error: null,
     loading: false,
@@ -29,7 +28,6 @@ const Finance_Acc_Start = (state, action) =>
   updateObject(state, { error: null, loading: true });
 
 const Finance_Acc_Success = (state, action) => {
-  console.log("actionInvoice", action);
   return updateObject(state, {
     error: null,
     loading: false,

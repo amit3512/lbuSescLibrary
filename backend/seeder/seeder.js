@@ -2,8 +2,10 @@ require("dotenv").config();
 const connectDB = require("../config/db");
 connectDB();
 
+const accountData = require("./accounts");
 const booksData = require("./books");
 
+const Account = require("../models/AccountModel");
 const Book = require("../models/BookModel");
 
 const importData = async () => {
@@ -12,8 +14,18 @@ const importData = async () => {
 
     await Book.collection.deleteMany({});
 
+    await Account.collection.deleteMany({});
+    await Account.collection.deleteMany({});
+
     if (process.argv[2] !== "-d") {
+      //Seed books data
       await Book.insertMany(booksData);
+      // Seed admin user
+      const existingAdmin = await Account.findOne({ studentId: "admin" });
+      if (!existingAdmin) {
+        const admin = new Account(accountData);
+        await admin.save();
+      }
 
       console.log("Seeder data imported successfully");
       process.exit();

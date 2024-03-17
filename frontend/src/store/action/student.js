@@ -2,6 +2,7 @@ import httpUtils from "../../utils/httpUtils";
 import {
   apiRouteForFetchEnrolledCourses,
   apiRouteForGetEnrolledCourses,
+  apiRouteForGetAllStudents,
 } from "../../constants/apiRoutes";
 
 import {
@@ -9,6 +10,8 @@ import {
   GET_ENROLLED_COURSES_SUCCESS,
   FETCH_ENROLLED_COURSE_SUCCESS,
   FETCH_ENROLLED_COURSE_START,
+  GET_ALL_STUDENT_START,
+  GET_ALL_STUDENT_SUCCESS,
 } from "../types";
 import { notification } from "antd";
 
@@ -29,6 +32,30 @@ export const fetchFailed = ({ type, message }) => {
   return {
     type: type,
     error: message,
+  };
+};
+
+export const getAllStudents = () => {
+  return async function (dispatch) {
+    const defaultErrorMsg = "Error on getting all students";
+
+    try {
+      dispatch(fetchSuccess(GET_ALL_STUDENT_START));
+      const response = await httpUtils.get(apiRouteForGetAllStudents);
+      const { status } = response?.data;
+      if (!status === 200) {
+        const { error } = response?.data;
+        throw error;
+      }
+
+      const { data: responseData } = response?.data;
+
+      //   localStorage.setItem("auth", responseData);
+      dispatch(fetchSuccess(GET_ALL_STUDENT_SUCCESS, responseData));
+    } catch (error) {
+      console.log("error", error);
+      //   dispatch(loginFailed({ message: error.message ?? defaultErrorMsg }));
+    }
   };
 };
 

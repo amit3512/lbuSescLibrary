@@ -9,8 +9,6 @@ export default function SingleCourseDetails(props) {
 
   const dispatch = useDispatch();
 
-  console.log("enrolledCoursesSingle", user?.enrolledCourses);
-
   const alreadyEnrolled = user?.enrolledCourses?.find(
     (course) => course.id === props?.courseId
   )
@@ -18,7 +16,6 @@ export default function SingleCourseDetails(props) {
     : false;
 
   const onClickEnrol = async () => {
-    // console.log("We are here", props?.courseId);
     dispatch(UpdateEnrolledCourse(props?.courseId, user?.email));
   };
   return (

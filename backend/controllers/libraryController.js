@@ -116,6 +116,32 @@ class LibraryController {
   //   }
   // };
 
+  getAllStudents = async (req, res, next) => {
+    try {
+      const students = await this.Account.find().select("-pin");
+      return res.status(200).json({
+        success: true,
+        data: students,
+        message: "All Students.",
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  getSingleStudentAccount = async (req, res, next) => {
+    const { studentId } = req.params;
+    try {
+      const student = await this.Account.find({ studentId }).select("-pin");
+      return res.status(200).json({
+        success: true,
+        data: student,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   getAllBooks = async (req, res, next) => {
     try {
       const books = await this.Book.find({});

@@ -15,8 +15,6 @@ const loginStart = (state, action) =>
   updateObject(state, { error: null, loading: true });
 
 const loginSuccess = (state, action) => {
-  console.log("action", action);
-
   return updateObject(state, {
     error: null,
     loading: false,

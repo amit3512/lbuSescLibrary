@@ -18,7 +18,6 @@ function MasterLayoutWrapper(childComponent) {
 }
 
 const Routess = () => {
-  const { data } = useSelector((state) => state.auth);
   return (
     <Router>
       <Routes>

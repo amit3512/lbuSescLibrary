@@ -12,7 +12,6 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { data, message } = useSelector((state) => state.auth);
-  console.log("datasss", data);
 
   useEffect(() => {
     if (!data) {

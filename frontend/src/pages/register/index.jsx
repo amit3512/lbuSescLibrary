@@ -14,7 +14,6 @@ const Register = () => {
         "http://127.0.0.1:5000/api/users/register",
         values
       );
-      console.log("response", response);
       if (response.status === 201) {
         navigate("/successfulRegister");
         notification.success({

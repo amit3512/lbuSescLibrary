@@ -63,8 +63,6 @@ export default function AllCoures(props) {
 
   const allCourses = courses?.data;
 
-  console.log("ALLCOURSES", courses);
-
   return (
     <>
       <Table

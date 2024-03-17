@@ -69,7 +69,6 @@ export const getFinanceAccInfo = () => {
       }
 
       const { data: responseData } = response?.data;
-      console.log("getFinanceAccInfo", response);
 
       dispatch(fetchSuccess(GET_FINANCE_ACCOUNT_INFO_SUCCESS, responseData));
     } catch (error) {

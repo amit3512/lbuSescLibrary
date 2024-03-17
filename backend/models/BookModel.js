@@ -5,7 +5,7 @@ const bookSchema = new mongoose.Schema({
   isbn: { type: String, unique: true },
   title: { type: String, unique: true },
   author: { type: String, unique: true },
-  copies: { type: String, unique: true },
+  copies: { type: String },
   year: { type: String },
 });
 

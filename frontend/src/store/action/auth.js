@@ -110,7 +110,6 @@ export const attemptLogin = (values) => {
         throw error;
       }
       const { data: responseData } = response.data;
-      console.log("response,", response);
 
       //   localStorage.setItem("auth", responseData);
       dispatch(loginSuccess(responseData));
@@ -147,7 +146,6 @@ export const updateBorrowReturn = (type, isbn, studentId) => {
       const todayDate = new Date().toLocaleDateString("en", options);
       // const todayDate = new Date();
       const overDue = responseData?.books?.find((book) => {
-        console.log("todayDate", book.returnDate, todayDate);
         return (
           book.isbn == isbn &&
           parseInt(book.overDue) > 0 &&
@@ -155,7 +153,6 @@ export const updateBorrowReturn = (type, isbn, studentId) => {
             todayDate
         );
       });
-      console.log("responseDataBookBorrowoverDue", overDue);
 
       if (overDue && type === "return") {
         alert(

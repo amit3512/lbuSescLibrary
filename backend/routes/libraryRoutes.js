@@ -12,9 +12,11 @@ const libraryController = new LibraryController(accountModel, bookModel);
 router.post("/accounts/register", libraryController.registerUser);
 router.post("/accounts/login", libraryController.loginUser);
 
-// router.get("/accounts", financeController.getAccounts);
 // router.post("/accounts/invoices", financeController.createInvoice);
 router.get("/books", libraryController.getAllBooks);
+router.get("/students", libraryController.getAllStudents);
+router.get("/accounts/:studentId", libraryController.getSingleStudentAccount);
+
 router.post(
   "/books/:type/",
   libraryController.updateAccountsWhenBorrowReturned

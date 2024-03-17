@@ -7,7 +7,7 @@ const accountSchema = new mongoose.Schema({
   isFirstLogin: { type: Boolean, default: true },
   books: [
     {
-      isbn: { type: String, unique: true },
+      isbn: { type: String },
       borrowDate: { type: Date },
       returnDate: { type: Date },
       dueDate: { type: Date },

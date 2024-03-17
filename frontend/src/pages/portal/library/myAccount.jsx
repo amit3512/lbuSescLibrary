@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 export default function MyAccount() {
   const { data, loading } = useSelector((state) => state.auth);
-  console.log("data", data);
 
   const columns = [
     {
@@ -44,7 +43,9 @@ export default function MyAccount() {
           ...x,
           key: index + 1,
           borrowDate: new Date(x.borrowDate).toLocaleDateString("en", options),
-          returnDate: new Date(x.returnDate).toLocaleDateString("en", options),
+          returnDate: x.returnDate
+            ? new Date(x.returnDate).toLocaleDateString("en", options)
+            : "",
           dueDate: new Date(x.dueDate).toLocaleDateString("en", options),
         }))}
         loading={loading}

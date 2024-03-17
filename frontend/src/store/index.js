@@ -7,14 +7,15 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import { createStore, applyMiddleware, compose } from "redux";
 import { thunk } from "redux-thunk";
 import authReducer from "./reducer/auth";
-import enrolledCourseReducer from "./reducer/student";
+import studentReducer from "./reducer/student";
 import invoiceReducer from "./reducer/invoice";
 import bookReducer from "./reducer/books";
 
 const reducers = combineReducers({
   auth: authReducer,
+  students: studentReducer,
   books: bookReducer,
-  enrolledCourses: enrolledCourseReducer,
+  enrolledCourses: studentReducer,
   invoice: invoiceReducer,
 });
 

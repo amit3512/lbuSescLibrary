@@ -7,13 +7,6 @@ const books = [
     year: 2020,
   },
   {
-    isbn: "9780596007126",
-    title: "Head First Design Patterns",
-    author: "Eric Freeman, Elisabeth Robson",
-    copies: 8,
-    year: 2021,
-  },
-  {
     isbn: "9780134685991",
     title: "Effective Java",
     author: "Joshua Bloch",
@@ -127,14 +120,6 @@ const books = [
     author: "Donald E. Knuth",
     copies: 14,
     year: 2021,
-  },
-  {
-    isbn: "9780201835953",
-    title: "Introduction to Algorithms",
-    author:
-      "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein",
-    copies: 10,
-    year: 2020,
   },
   {
     isbn: "9780132350884",
