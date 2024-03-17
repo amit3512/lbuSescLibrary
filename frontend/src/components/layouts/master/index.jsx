@@ -19,7 +19,7 @@ export default function MasterLayout({ component: Component, ...rest }) {
       >
         <Title level={3}>
           <span style={{ color: "orange" }}>Library </span>
-          {data?.studentId !== "admin" ? "Portal" : "Admin"}
+          {data?.studentId !== "admin" ? data?.studentId : "Admin"}
         </Title>
         {data && (
           <Text

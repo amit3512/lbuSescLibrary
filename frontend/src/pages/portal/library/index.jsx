@@ -8,13 +8,14 @@ import { getAllBooks } from "../../../store/action/books";
 import { getAllStudents } from "../../../store/action/student";
 import CurrentLoans from "./admin/currentLoans";
 import OverDue from "./admin/overDueBooks";
-import AllStudents from "./admin/allSudents";
+import AllStudents from "./admin/allStudents";
 
 export default function LibraryPortal() {
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.auth);
   const [activeKey, setActiveKey] = useState(
-    data.studentId !== "admin" ? "4" : "5"
+    // data.studentId !== "admin" ? "4" : "5"
+    "1"
   );
   const [isbn, setISBN] = useState("");
   const items = [
@@ -68,9 +69,8 @@ export default function LibraryPortal() {
     if (key === "1") {
       dispatch(getAllBooks());
     }
-    if (key === "4") {
-    }
-    if (key === "5" || key === "6") {
+
+    if (key === "4" || key === "5" || key === "6") {
       dispatch(getAllStudents());
     }
   };

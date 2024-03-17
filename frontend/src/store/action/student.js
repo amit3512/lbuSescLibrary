@@ -49,6 +49,7 @@ export const getAllStudents = () => {
       }
 
       const { data: responseData } = response?.data;
+      console.log("allStudents", responseData);
 
       //   localStorage.setItem("auth", responseData);
       dispatch(fetchSuccess(GET_ALL_STUDENT_SUCCESS, responseData));

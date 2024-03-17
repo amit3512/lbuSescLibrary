@@ -141,31 +141,35 @@ export const updateBorrowReturn = (type, isbn, studentId) => {
         const { error } = response?.data;
         throw error;
       }
-      const { data: responseData } = response;
+      const { data: responseData, fine } = response.data;
+      console.log("responseUpdateBorrowReturn", response);
       const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-      const todayDate = new Date().toLocaleDateString("en", options);
-      // const todayDate = new Date();
-      const overDue = responseData?.books?.find((book) => {
-        return (
-          book.isbn == isbn &&
-          parseInt(book.overDue) > 0 &&
-          new Date(book.returnDate).toLocaleDateString("en", options) ==
-            todayDate
-        );
-      });
+      // const todayDate = new Date().toLocaleDateString("en", options);
+      // // const todayDate = new Date();
+      // const overDue = responseData?.books?.find((book) => {
+      //   return (
+      //     book.isbn == isbn &&
+      //     parseInt(book.overDue) > 0 &&
+      //     new Date(book.returnDate).toLocaleDateString("en", options) ==
+      //       todayDate
+      //   );
+      // });
 
-      if (overDue && type === "return") {
-        alert(
-          `You have been fined ${
-            overDue.overDue * 0.4
-          } pound/s. Go to student portal for more invoice details.`
-        );
-      } else {
-        notification.success({ message: `Book ${type}ed` });
-      }
+      // if (overDue && type === "return") {
+      //   alert(
+      //     `You have been fined ${
+      //       overDue.overDue * 0.4
+      //     } pound/s. Go to student portal for more invoice details.`
+      //   );
+      // } else {
+      //   notification.success({ message: `Book ${type}ed` });
+      // }
 
       //   localStorage.setItem("auth", responseData);
       dispatch(studentUpdateSuccess(responseData));
+      notification.success({
+        message: `Book ${type}ed. ${fine}`,
+      });
     } catch (error) {
       console.log("error", error);
       notification.warning({ message: error?.response?.data });

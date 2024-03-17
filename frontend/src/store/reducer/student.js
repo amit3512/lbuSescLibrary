@@ -15,6 +15,7 @@ const AllStudentStart = (state, action) =>
   updateObject(state, { error: null, loading: true });
 
 const AllStudentSuccess = (state, action) => {
+  console.log("actionStudent", action);
   return updateObject(state, {
     error: null,
     loading: false,

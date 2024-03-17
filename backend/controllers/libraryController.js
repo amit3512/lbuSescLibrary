@@ -192,6 +192,7 @@ class LibraryController {
 
       // if (type == "borrow" && borrowedBookandReturned) {
       // }
+      let fine = "";
 
       if (borrowedBookButNotReturned && type == "return") {
         let overdueDays;
@@ -228,6 +229,7 @@ class LibraryController {
               },
             }
           );
+          fine = `You have been fined £${libraryFine}. Please log in to Payment Portal to pay the invoice reference: ${responseInvoice.data.data.reference}. Visit the Student Portal for more invoice details.`;
         }
       } else if (borrowedBookandReturned && type == "return") {
         res.status(400).json("Book Already Returned.");
@@ -236,7 +238,7 @@ class LibraryController {
       }
 
       const upadtedAccount = await account.save();
-      res.status(200).json(upadtedAccount);
+      res.status(200).json({ data: upadtedAccount, fine: fine });
     } catch (err) {
       next(err);
     }

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export default function MyAccount() {
   const { data, loading } = useSelector((state) => state.auth);
+  console.log("dataaaa", data);
 
   const columns = [
     {
