@@ -36,7 +36,7 @@ export default function Login() {
           <Input placeholder="Student Id" />
         </Form.Item>
         <Form.Item name="pin">
-          <Input placeholder="PIN" />
+          <Input.Password placeholder="PIN" />
         </Form.Item>
         <Button type="primary" htmlType="submit">
           Log In

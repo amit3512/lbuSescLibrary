@@ -44,7 +44,7 @@ export default function Register() {
           <Input placeholder="Student Id" />
         </Form.Item>
         <Form.Item name="pin">
-          <Input placeholder="New PIN" />
+          <Input.Password placeholder="New PIN" />
         </Form.Item>
         <Form.Item
           name="confirmPin"
@@ -56,7 +56,7 @@ export default function Register() {
           validateStatus={confirmPinError ? "error" : ""}
           help={confirmPinError}
         >
-          <Input placeholder="Confirm PIN" />
+          <Input.Password placeholder="Confirm PIN" />
         </Form.Item>
         <Button type="primary" htmlType="submit">
           Register
