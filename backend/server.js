@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 // mongodb connection
 const connectDB = require("./config/db");
-connectDB();
+// connectDB();
 
 app.use("/api", apiRoutes);
 
@@ -35,8 +35,8 @@ app.use((error, req, res, next) => {
 const PORT = process.env.PORT || 5002;
 
 // httpServer.listen(PORT, () => console.log(`Serversss running on port ${PORT}`));
-httpServer.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// httpServer.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
 
 module.exports = { app, httpServer };
